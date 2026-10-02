@@ -2,6 +2,16 @@
   --detail-ink: #1c1f24;
   --detail-muted: #64676e;
   --detail-border: #e4e5e7;
+  position: fixed;
+  z-index: 90;
+  inset: var(--catalog-header-height) 0 0;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  overflow-x: clip;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
   padding: 20px clamp(24px, 4.5vw, 76px) 56px;
   color: var(--detail-ink);
   background: #fff;

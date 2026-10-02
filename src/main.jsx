@@ -101,11 +101,14 @@ function App(){
  useEffect(()=>{document.documentElement.dataset.theme=theme;localStorage.setItem('3dcar-theme',theme)},[theme]);
  useLayoutEffect(()=>{
   if(!detailOpen)return;
-  const detailBar=document.querySelector('.catalog-detail-bar');
-  if(!detailBar)return;
-  const header=document.querySelector('.site-header.is-visible');
-  const top=detailBar.getBoundingClientRect().top+window.scrollY-(header?.offsetHeight||0);
-  window.scrollTo({left:0,top:Math.max(0,top),behavior:'instant'});
+  const previousBodyOverflow=document.body.style.overflow;
+  const previousRootOverflow=document.documentElement.style.overflow;
+  document.body.style.overflow='hidden';
+  document.documentElement.style.overflow='hidden';
+  return()=>{
+   document.body.style.overflow=previousBodyOverflow;
+   document.documentElement.style.overflow=previousRootOverflow;
+  };
  },[detailOpen]);
  useEffect(()=>{if(detailOpen&&(viewMode==='3d'||(isDiffuser&&viewMode==='exploded')))import('@google/model-viewer').catch(()=>setStageStatus('error'))},[detailOpen,viewMode]);
  useLayoutEffect(()=>{if(!catalogTransition)return;const targets=document.querySelectorAll(detailOpen?'#produtos > .catalog-detail-bar, #produtos > .product-layout':'#produtos > .catalog-bar, #produtos > .product-shelf'),reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches,distance=reduced?18:64,duration=reduced?300:700,direction=catalogTransition==='forward'?1:-1,animations=[...targets].map((element,index)=>element.animate([{opacity:reduced?0.65:0,transform:`translateX(${distance*direction}px)`},{opacity:1,transform:'translateX(0)'}],{duration,delay:reduced?0:index*45,easing:'cubic-bezier(.22,.61,.36,1)',fill:'both'}));return()=>animations.forEach(animation=>animation.cancel())},[catalogTransition,detailOpen]);
@@ -171,7 +174,7 @@ function App(){
   requestAnimationFrame(()=>document.getElementById(target)?.scrollIntoView({behavior:'smooth',block:'start'}));
  }
  async function fullscreen(){if(document.fullscreenElement)await document.exitFullscreen();else if(stage.current?.requestFullscreen)await stage.current.requestFullscreen()}
- return <><header className="catalog-header"><Brand onNavigate={event=>navigateCatalog(event,'inicio')}/><a className="sales-shortcut" href="#lojas">Onde comprar</a><a className="header-contact" href={whatsapp} target="_blank" rel="noreferrer">Fale com a 3D CAR</a><button className="theme-toggle" type="button" onClick={()=>setTheme(theme==='dark'?'light':'dark')} aria-label={theme==='dark'?'Ativar modo claro':'Ativar modo escuro'} title={theme==='dark'?'Ativar modo claro':'Ativar modo escuro'}>{theme==='dark'?<Sun size={17}/>:<Moon size={17}/>}<span>{theme==='dark'?'Claro':'Escuro'}</span></button></header><main id="inicio">
+ return <><header className={`catalog-header${detailOpen ? " is-detail-open" : ""}`}><Brand onNavigate={event=>navigateCatalog(event,'inicio')}/><a className="sales-shortcut" href="#lojas">Onde comprar</a><a className="header-contact" href={whatsapp} target="_blank" rel="noreferrer">Fale com a 3D CAR</a><button className="theme-toggle" type="button" onClick={()=>setTheme(theme==='dark'?'light':'dark')} aria-label={theme==='dark'?'Ativar modo claro':'Ativar modo escuro'} title={theme==='dark'?'Ativar modo claro':'Ativar modo escuro'}>{theme==='dark'?<Sun size={17}/>:<Moon size={17}/>}<span>{theme==='dark'?'Claro':'Escuro'}</span></button></header><main id="inicio">
 
  <section className={'catalog catalog-refresh '+(detailOpen?'product-detail ':'')+(catalogTransition?'catalog-transition-'+catalogTransition:'')} id="produtos" aria-label="Catálogo de peças">{detailOpen ? <>
 <div className="catalog-bar catalog-detail-bar"><button className="back-to-catalog" type="button" onClick={navigateCatalog}>← Voltar ao catálogo</button><span className="detail-breadcrumb">{selectedProduct.category.split(' / ').pop().toLowerCase().replace(/^./, letter=>letter.toUpperCase())} / {selectedProduct.vehicle}</span></div>
