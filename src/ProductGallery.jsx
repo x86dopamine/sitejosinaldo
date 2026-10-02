@@ -85,7 +85,7 @@ export default function ProductGallery({ product, extras = [], variantIndex = 0,
   const photoCount = photos.filter(item => !item.pending).length;
   const photoPosition = photos.slice(0, activeIndex + 1).filter(item => !item.pending).length;
   const assembledModel = isDiffuser ? '/products/difusor-grand-vitara.glb' : product.model;
-  const explodedModel = isDiffuser ? '/products/difusor-grand-vitara-exploded.glb' : product.explodedModel;
+  const explodedModel = product.explodedModel;
   const modelSource = mode === 'exploded' ? explodedModel : assembledModel;
 
   useEffect(() => {
