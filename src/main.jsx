@@ -99,7 +99,14 @@ function App(){
  const stage=useRef(null),isDiffuser=selected===0,selectedProduct=catalogProducts[selected],productCopy=productCopyByName[selectedProduct.name],activeVariant=selectedProduct.variants?.[variantSelections[selected]??0],activeImage=activeVariant?.image||selectedProduct.image;
  const visibleProducts=catalogProducts.map((product,index)=>({product,index})).filter(({product})=>(category==='Todos'||product.category.endsWith(category.toUpperCase()))&&normalizeSearch(product.name+' '+product.vehicle+' '+product.category).includes(normalizeSearch(search)));
  useEffect(()=>{document.documentElement.dataset.theme=theme;localStorage.setItem('3dcar-theme',theme)},[theme]);
- useEffect(()=>{if(detailOpen)requestAnimationFrame(()=>document.getElementById('produtos')?.scrollIntoView({behavior:'smooth',block:'start'}))},[detailOpen]);
+ useLayoutEffect(()=>{
+  if(!detailOpen)return;
+  const detailBar=document.querySelector('.catalog-detail-bar');
+  if(!detailBar)return;
+  const header=document.querySelector('.site-header.is-visible');
+  const top=detailBar.getBoundingClientRect().top+window.scrollY-(header?.offsetHeight||0);
+  window.scrollTo(0,Math.max(0,top));
+ },[detailOpen]);
  useEffect(()=>{if(detailOpen&&(viewMode==='3d'||(isDiffuser&&viewMode==='exploded')))import('@google/model-viewer').catch(()=>setStageStatus('error'))},[detailOpen,viewMode]);
  useLayoutEffect(()=>{if(!catalogTransition)return;const targets=document.querySelectorAll(detailOpen?'#produtos > .catalog-detail-bar, #produtos > .product-layout':'#produtos > .catalog-bar, #produtos > .product-shelf'),reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches,distance=reduced?18:64,duration=reduced?300:700,direction=catalogTransition==='forward'?1:-1,animations=[...targets].map((element,index)=>element.animate([{opacity:reduced?0.65:0,transform:`translateX(${distance*direction}px)`},{opacity:1,transform:'translateX(0)'}],{duration,delay:reduced?0:index*45,easing:'cubic-bezier(.22,.61,.36,1)',fill:'both'}));return()=>animations.forEach(animation=>animation.cancel())},[catalogTransition,detailOpen]);
  useLayoutEffect(()=>{
