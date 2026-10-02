@@ -105,7 +105,7 @@ function App(){
   if(!detailBar)return;
   const header=document.querySelector('.site-header.is-visible');
   const top=detailBar.getBoundingClientRect().top+window.scrollY-(header?.offsetHeight||0);
-  window.scrollTo(0,Math.max(0,top));
+  window.scrollTo({left:0,top:Math.max(0,top),behavior:'instant'});
  },[detailOpen]);
  useEffect(()=>{if(detailOpen&&(viewMode==='3d'||(isDiffuser&&viewMode==='exploded')))import('@google/model-viewer').catch(()=>setStageStatus('error'))},[detailOpen,viewMode]);
  useLayoutEffect(()=>{if(!catalogTransition)return;const targets=document.querySelectorAll(detailOpen?'#produtos > .catalog-detail-bar, #produtos > .product-layout':'#produtos > .catalog-bar, #produtos > .product-shelf'),reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches,distance=reduced?18:64,duration=reduced?300:700,direction=catalogTransition==='forward'?1:-1,animations=[...targets].map((element,index)=>element.animate([{opacity:reduced?0.65:0,transform:`translateX(${distance*direction}px)`},{opacity:1,transform:'translateX(0)'}],{duration,delay:reduced?0:index*45,easing:'cubic-bezier(.22,.61,.36,1)',fill:'both'}));return()=>animations.forEach(animation=>animation.cancel())},[catalogTransition,detailOpen]);
