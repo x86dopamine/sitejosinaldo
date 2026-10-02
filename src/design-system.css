@@ -1,0 +1,29 @@
+:root {
+  --brand-font: 'Manrope', Arial, Helvetica, sans-serif;
+  --catalog-ui-font: var(--brand-font);
+  --brand-ink: #1c1f24;
+  --brand-muted: #646b73;
+  --brand-surface: #f5f6f7;
+  --brand-border: #e3e6e9;
+  --brand-orange: #ff6500;
+  --brand-action: #cf4900;
+  --site-header-height: 76px;
+  --page-gutter: clamp(20px, 5vw, 76px);
+  font-family: var(--brand-font);
+  color: var(--brand-ink);
+  background: #fff;
+  color-scheme: light;
+}
+html { scroll-padding-top: calc(var(--site-header-height) + 16px); }
+body { font-family: var(--brand-font); -webkit-font-smoothing: antialiased; }
+button, input, select { font-family: inherit; }
+::selection { background: #ff650026; color: #1c1f24; }
+.brand-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 54px; padding: 14px 22px; border: 1px solid transparent; border-radius: 12px; font: 700 15px/1.3 var(--brand-font); transition: background 160ms, border-color 160ms; }
+.brand-button svg { flex: none; width: 20px; height: 20px; }
+.brand-button-primary { background: var(--brand-action); color: #fff; }
+.brand-button-primary:hover { background: #bd4100; }
+.brand-button-secondary { background: #fff; border-color: #d6dbe0; color: var(--brand-ink); }
+.brand-button-secondary:hover { background: var(--brand-surface); border-color: #b4bbc3; }
+.brand-button:focus-visible { outline: 3px solid #ff6500; outline-offset: 4px; }
+@media (max-width: 820px) { :root { --site-header-height: 64px; } }
+@media (prefers-reduced-motion: reduce) { .brand-button { transition: none; } }

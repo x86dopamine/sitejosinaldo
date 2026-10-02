@@ -6,12 +6,14 @@ import './product-details.css';
 export default function ProductDetails({ product, copy, extras, variantIndex, onVariantChange, isDiffuser, contactHref }) {
   const information = getPieceInformation(product, copy);
   const variant = product.variants?.[variantIndex];
+  const sentenceCase = value => value.toLocaleLowerCase('pt-BR').replace(/^./, letter => letter.toUpperCase());
+  const category = sentenceCase(product.category.split(' / ').pop());
 
   return <div className="product-layout">
     <ProductGallery key={product.name} product={product} extras={extras} variantIndex={variantIndex} onVariantChange={onVariantChange} isDiffuser={isDiffuser}/>
     <aside className="product-info" aria-labelledby="product-detail-title">
       <div className="product-summary">
-        <p className="eyebrow">{product.category.split(' / ').pop()} · {copy.location}</p>
+        <div className="product-context"><span className="product-category">{category}</span><span>{sentenceCase(copy.location)}</span></div>
         <h1 id="product-detail-title">{product.name}</h1>
         <p className="product-vehicle">{product.vehicle}</p>
         <p className="lead">{copy.lead}</p>

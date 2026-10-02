@@ -1,37 +1,41 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ArrowUpRight, Box, Maximize, Minus, Plus, RotateCcw, MessageCircle, Sun, Moon, Search, X, Layers } from 'lucide-react';
+import { ArrowUpRight, MessageCircle, Search, X } from 'lucide-react';
 import './styles.css';
-import './catalog-refresh.css';
+import './design-system.css';
+import Cover, { SiteHeader } from './Cover.jsx';
 import ProductDetails from './ProductDetails.jsx';
+import CatalogCard from './CatalogCard.jsx';
+import SalesDialog from './SalesDialog.jsx';
+import './catalog-refresh.css';
+import './product-gallery.css';
 const whatsapp = 'https://api.whatsapp.com/message/CVKYJT6PWN42E1?autoload=1&app_absent=0&utm_source=ig';
 const productPhotos = {
- diffuserPair:'https://http2.mlstatic.com/D_Q_NP_2X_998219-MLB114472103498_082026-E--difusor-de-ar-lateral-suzuki-grand-vitara-par-2009-a-2015.webp',
- rackFrontPassenger:'https://http2.mlstatic.com/D_Q_NP_2X_853263-MLB98920024882_112025-E--acabamento-ponteira-rack-grand-vitara-dianteira-passageiro.webp',
- rackRearDriver:'https://http2.mlstatic.com/D_Q_NP_2X_678850-MLB98916870846_112025-E--acabamento-ponteira-rack-grand-vitara-traseira-motorista.webp',
- rackRearPassenger:'https://http2.mlstatic.com/D_Q_NP_2X_807065-MLB98535456642_112025-E--acabamento-ponteira-rack-grand-vitara-traseira-passageiro.webp',
- coverOne:'https://http2.mlstatic.com/D_Q_NP_2X_796571-MLB111756783855_052026-E--tampa-do-bagageiro-rack-suzuki-grand-vitara-g3--1-peca-.webp',
- coverTwo:'https://http2.mlstatic.com/D_Q_NP_2X_882463-MLB111758395801_052026-E--tampa-do-bageiro-rack-suzuki-grand-vitara-g3--2-pecas-.webp',
- coverFive:'https://http2.mlstatic.com/D_Q_NP_2X_906519-MLB111755091749_052026-E--tampa-do-bagageiro-rack-suzuki-grand-vitara-g3--5-pecas-.webp',
- coverTen:'/products/catalog-placeholder.svg',
- coverTwelve:'https://http2.mlstatic.com/D_Q_NP_2X_788837-MLB110796859340_052026-E--tampa-do-bagageiro-rack-suzuki-grand-vitara-g3--12-pecas-.webp',
- pullerOne:'https://http2.mlstatic.com/D_Q_NP_2X_829963-MLB112211569322_062026-E--puxador-interno-porta-suzuki-grand-vitara.webp',
- doorSeal:'https://http2.mlstatic.com/D_Q_NP_2X_710455-MLB51119991864_082022-E--selo-da-porta-suzuki-grand-vitara.webp',
- frontEmblem:'https://http2.mlstatic.com/D_Q_NP_2X_654814-MLB73734709874_012024-E--emblema-suzuki-grand-vitara-grade-dianteira.webp',
- blackEmblem:'https://http2.mlstatic.com/D_Q_NP_2X_726400-MLB53909524357_022023-E--emblema-preto-suzuki-grand-vitara.webp',
- chromeEmblem:'https://http2.mlstatic.com/D_Q_NP_2X_768742-MLB51033706207_082022-E--emblema-suzuki-grand-vitara.webp',
- wheelCap:'https://http2.mlstatic.com/D_Q_NP_2X_900413-MLB70500316006_072023-E--calota-centro-de-roda-grand-vitara-gv3--kit-4-pecas-.webp',
- trunkClipOne:'https://http2.mlstatic.com/D_Q_NP_2X_947954-MLB46452549188_062021-E--clipe-da-capa-da-mala-suzuki-grand-vitara--1-peca-.webp',
- trunkClipFour:'https://http2.mlstatic.com/D_Q_NP_2X_994729-MLB70255846903_072023-E--clipe-da-capa-da-mala-suzuki-grand-vitara-4-pecas.webp',
- bagagitoLatch:'https://http2.mlstatic.com/D_Q_NP_2X_622203-MLB53215988069_012023-E--presilha-da-lona-bagagito-suzuki-grand-vitara.webp',
- bagagitoSupport:'https://http2.mlstatic.com/D_Q_NP_2X_662735-MLB50969954056_082022-E--suporte-tampa-bagagito-suzuki-grand-vitara.webp',
- radiatorCap:'https://http2.mlstatic.com/D_Q_NP_2X_883834-MLB112734010706_062026-E--tampa-do-reservatorio-radiador-grand-vitara.webp',
- fourByFour:'https://http2.mlstatic.com/D_Q_NP_2X_752835-MLB115903271243_082026-E--emblema-3d-4-x-4-grand-vitara-2-pecas.webp',
- consoleLatch:'https://http2.mlstatic.com/D_Q_NP_2X_984580-MLB73945213015_012024-E--trava-do-console-grand-vitara-gv3.webp',
- spareEmblem:'https://http2.mlstatic.com/D_Q_NP_2X_754159-MLB51413005668_092022-E--emblema-estepe-suzuki-grand-vitara.webp',
- seatTrim:'https://http2.mlstatic.com/D_Q_NP_2X_759289-MLB112271243326_062026-E--acabamento-banco-traseiro-grand-vitara.webp',
+ diffuserPair:'/products/gallery/difusor-kit-2.webp',
+ rackFrontPassenger:'/products/gallery/catalog-rackFrontPassenger.webp',
+ rackRearDriver:'/products/gallery/catalog-rackRearDriver.webp',
+ rackRearPassenger:'/products/gallery/catalog-rackRearPassenger.webp',
+ coverOne:'/products/gallery/catalog-coverOne.webp',
+ coverTwo:'/products/gallery/catalog-coverTwo.webp',
+ coverFive:'/products/gallery/catalog-coverFive.webp',
+ coverTen:'/products/gallery/tampa-rack-kit-10.webp',
+ pullerOne:'/products/gallery/catalog-pullerOne.webp',
+ doorSeal:'/products/gallery/catalog-doorSeal.webp',
+ frontEmblem:'/products/gallery/catalog-frontEmblem.webp',
+ blackEmblem:'/products/gallery/catalog-blackEmblem.webp',
+ chromeEmblem:'/products/gallery/catalog-chromeEmblem.webp',
+ wheelCap:'/products/gallery/catalog-wheelCap.webp',
+ trunkClipOne:'/products/gallery/catalog-trunkClipOne.webp',
+ trunkClipFour:'/products/gallery/catalog-trunkClipFour.webp',
+ bagagitoLatch:'/products/gallery/catalog-bagagitoLatch.webp',
+ bagagitoSupport:'/products/gallery/catalog-bagagitoSupport.webp',
+ radiatorCap:'/products/gallery/catalog-radiatorCap.webp',
+ fourByFour:'/products/gallery/catalog-fourByFour.webp',
+ consoleLatch:'/products/gallery/catalog-consoleLatch.webp',
+ spareEmblem:'/products/gallery/catalog-spareEmblem.webp',
+ seatTrim:'/products/gallery/catalog-seatTrim.webp',
  pullerTrim:'/products/acabamento-puxador-interno-porta.png',
- gearUnlock:'https://http2.mlstatic.com/D_Q_NP_2X_785994-MLB73710343673_122023-E--tampa-de-desbloqueio-da-seletora-cambio-suzuki-grand-vitara.webp'
+ gearUnlock:'/products/gallery/catalog-gearUnlock.webp'
 };
 const catalogProducts = [
  {name:'Difusor de ar lateral',vehicle:'Suzuki Grand Vitara',category:'PEÇA 01 / INTERIOR',image:'/products/difusor-card.png',variants:[{label:'1 peça',image:'/products/difusor-card.png',alt:'Um difusor lateral de ar para Suzuki Grand Vitara'},{label:'2 peças',image:productPhotos.diffuserPair,alt:'Par de difusores laterais de ar para Suzuki Grand Vitara, modelo 2009 a 2015'}]},
@@ -39,7 +43,7 @@ const catalogProducts = [
  {name:'Emblema Suzuki Grand Vitara preto',vehicle:'Suzuki Grand Vitara',category:'PEÇA 03 / EXTERIOR',image:productPhotos.blackEmblem,model:'/products/emblema-suzuki-preto.glb',vehicleImage:'/products/emblema-suzuki-preto-no-veiculo.png',vehicleImageFrame:'landscape',disableAutoRotate:true},
  {name:'Emblema traseiro cromado',vehicle:'Suzuki Grand Vitara',category:'PEÇA 04 / EXTERIOR',image:productPhotos.chromeEmblem,model:'/products/emblema-suzuki-cromado.glb',vehicleImage:'/products/emblema-traseiro-suzuki-cromado-no-veiculo.png',vehicleImageFrame:'square',vehicleImageAlt:'Emblema Suzuki Grand Vitara cromado instalado na tampa traseira do veículo'},
  {name:'Puxador interno da porta',vehicle:'Suzuki Grand Vitara',category:'PEÇA 05 / INTERIOR',image:productPhotos.pullerOne,variants:[{label:'1 peça',image:productPhotos.pullerOne,alt:'Um puxador interno da porta Suzuki Grand Vitara'},{label:'2 peças',image:'/products/kit-puxadores-porta-grand-vitara-2-pecas.png',alt:'Kit com dois puxadores internos da porta Suzuki Grand Vitara'},{label:'4 peças',image:'/products/kit-puxadores-porta-grand-vitara.png',alt:'Kit com quatro puxadores internos da porta Suzuki Grand Vitara'}]},
- {name:'Tampa do bagageiro',vehicle:'Suzuki Grand Vitara',category:'PEÇA 06 / EXTERIOR',image:productPhotos.coverOne,variants:[{label:'1 peça',image:productPhotos.coverOne,alt:'Uma tampa do rack do bagageiro para Suzuki Grand Vitara'},{label:'2 peças',image:productPhotos.coverTwo,alt:'Duas tampas do rack do bagageiro para Suzuki Grand Vitara'},{label:'5 peças',image:productPhotos.coverFive,alt:'Cinco tampas do rack do bagageiro para Suzuki Grand Vitara'},{label:'10 peças',image:productPhotos.coverTen,alt:'Foto da opção de dez peças em atualização',photoPending:true},{label:'12 peças',image:productPhotos.coverTwelve,alt:'Doze tampas do rack do bagageiro para Suzuki Grand Vitara'}]},
+ {name:'Tampa do bagageiro',vehicle:'Suzuki Grand Vitara',category:'PEÇA 06 / EXTERIOR',image:productPhotos.coverOne,variants:[{label:'1 peça',image:productPhotos.coverOne,alt:'Uma tampa do rack do bagageiro para Suzuki Grand Vitara'},{label:'2 peças',image:productPhotos.coverTwo,alt:'Duas tampas do rack do bagageiro para Suzuki Grand Vitara'},{label:'5 peças',image:productPhotos.coverFive,alt:'Cinco tampas do rack do bagageiro para Suzuki Grand Vitara'},{label:'10 peças',image:productPhotos.coverTen,alt:'Kit com dez tampas do rack do bagageiro para Suzuki Grand Vitara'},{label:'12 peças',image:'/products/catalog-placeholder.svg',alt:'Foto do kit de doze tampas em breve',photoPending:true}]},
  {name:'Acabamento da ponteira do rack',vehicle:'Suzuki Grand Vitara',category:'PEÇA 07 / EXTERIOR',selectorLabel:'Posição no veículo',image:productPhotos.rackFrontPassenger,variants:[{label:'Dianteira · passageiro',image:productPhotos.rackFrontPassenger,alt:'Acabamento da ponteira dianteira do rack, lado do passageiro'},{label:'Traseira · motorista',image:productPhotos.rackRearDriver,alt:'Acabamento da ponteira traseira do rack, lado do motorista'},{label:'Traseira · passageiro',image:productPhotos.rackRearPassenger,alt:'Acabamento da ponteira traseira do rack, lado do passageiro'}]},
  {name:'Tampa de desbloqueio do câmbio',vehicle:'Suzuki Grand Vitara',category:'PEÇA 08 / INTERIOR',image:productPhotos.gearUnlock},
  {name:'Calota central',vehicle:'Suzuki Grand Vitara',category:'PEÇA 09 / EXTERIOR',image:productPhotos.wheelCap},
@@ -55,6 +59,223 @@ const catalogProducts = [
  {name:'Acabamento do puxador interno da porta',vehicle:'Suzuki Grand Vitara',category:'PEÇA 19 / INTERIOR',image:productPhotos.pullerTrim},
  {name:'Tampa metálica de válvula Capsilone',vehicle:'Suzuki',category:'PEÇA 20 / REPOSIÇÃO',image:'/products/tampa-valvula-capsilone.png'}
 ];
+const productGalleryPhotos = {
+  "0": [
+    {
+      "src": "/products/gallery/difusor-frente-aberto.webp",
+      "label": "Lâminas abertas",
+      "alt": "Difusor de ar com as lâminas abertas"
+    },
+    {
+      "src": "/products/gallery/difusor-frente-fechado.webp",
+      "label": "Lâminas fechadas",
+      "alt": "Difusor de ar com as lâminas fechadas"
+    },
+    {
+      "src": "/products/gallery/difusor-lateral-real.webp",
+      "label": "Vista lateral",
+      "alt": "Encaixes laterais do difusor de ar"
+    },
+    {
+      "src": "/products/gallery/difusor-encaixes.webp",
+      "label": "Encaixe traseiro",
+      "alt": "Parte traseira do difusor de ar"
+    },
+    {
+      "src": "/products/gallery/difusor-mecanismo.webp",
+      "label": "Mecanismo",
+      "alt": "Mecanismo das lâminas do difusor de ar"
+    },
+    {
+      "src": "/products/gallery/difusor-painel-aberto.webp",
+      "label": "No painel",
+      "alt": "Difusor aberto instalado na saída lateral do painel"
+    },
+    {
+      "src": "/products/gallery/difusor-painel-fechado.webp",
+      "label": "No painel · fechado",
+      "alt": "Difusor fechado instalado no painel"
+    },
+    {
+      "src": "/products/gallery/difusor-painel-motorista.webp",
+      "label": "Lado do motorista",
+      "alt": "Difusor instalado no lado do motorista"
+    }
+  ],
+  "1": [
+    {
+      "src": "/products/gallery/emblema-grade-instalado.webp",
+      "label": "No veículo",
+      "alt": "Emblema vermelho instalado na grade dianteira do Grand Vitara"
+    }
+  ],
+  "3": [
+    {
+      "src": "/products/gallery/emblema-cromado-frente.webp",
+      "label": "Vista frontal",
+      "alt": "Emblema Suzuki cromado visto de frente"
+    },
+    {
+      "src": "/products/gallery/emblema-cromado-perspectiva.webp",
+      "label": "Perspectiva",
+      "alt": "Emblema Suzuki cromado em perspectiva"
+    },
+    {
+      "src": "/products/gallery/emblema-cromado-lateral.webp",
+      "label": "Vista lateral",
+      "alt": "Espessura e acabamento do emblema cromado"
+    }
+  ],
+  "4": [
+    {
+      "src": "/products/gallery/puxador-frente-real.webp",
+      "label": "Vista frontal",
+      "alt": "Puxador interno da porta visto de frente"
+    },
+    {
+      "src": "/products/gallery/puxador-verso-real.webp",
+      "label": "Parte traseira",
+      "alt": "Parte traseira do puxador interno da porta"
+    },
+    {
+      "src": "/products/gallery/puxador-lateral-real.webp",
+      "label": "Vista lateral",
+      "alt": "Puxador interno da porta visto de lado"
+    },
+    {
+      "src": "/products/gallery/puxador-textura-real.webp",
+      "label": "Textura e encaixes",
+      "alt": "Textura e encaixes do puxador interno"
+    },
+    {
+      "src": "/products/gallery/puxador-instalado.webp",
+      "label": "Instalado",
+      "alt": "Puxador interno instalado na porta"
+    },
+    {
+      "src": "/products/gallery/puxador-porta-bege.webp",
+      "label": "Na porta",
+      "alt": "Puxador instalado em uma porta com acabamento bege"
+    }
+  ],
+  "5": [
+    {
+      "src": "/products/gallery/tampa-rack-frente.webp",
+      "label": "Detalhe · frente",
+      "alt": "Uma tampa do rack vista pela frente"
+    },
+    {
+      "src": "/products/gallery/tampa-rack-encaixes.webp",
+      "label": "Detalhe · encaixes",
+      "alt": "Encaixes na parte traseira de uma tampa do rack"
+    }
+  ],
+  "6": [
+    {
+      "src": "/products/gallery/ponteira-rack-frente.webp",
+      "label": "Dianteira · frente",
+      "alt": "Vista frontal da ponteira dianteira do rack",
+      "variantIndex": 0
+    },
+    {
+      "src": "/products/gallery/ponteira-rack-verso.webp",
+      "label": "Dianteira · encaixes",
+      "alt": "Encaixes da ponteira dianteira do rack",
+      "variantIndex": 0
+    }
+  ],
+  "8": [
+    {
+      "src": "/products/gallery/calota-frente-real.webp",
+      "label": "Detalhe · frente",
+      "alt": "Calota central com emblema Suzuki vermelho vista de frente"
+    },
+    {
+      "src": "/products/gallery/calota-verso-real.webp",
+      "label": "Detalhe · verso",
+      "alt": "Encaixes traseiros da calota central"
+    },
+    {
+      "src": "/products/gallery/calota-instalada.webp",
+      "label": "Na roda",
+      "alt": "Calota central instalada na roda do estepe"
+    }
+  ],
+  "11": [
+    {
+      "src": "/products/gallery/suporte-bagagito-frente.webp",
+      "label": "Vista frontal",
+      "alt": "Suporte da tampa do bagagito e seus pontos de fixação"
+    },
+    {
+      "src": "/products/gallery/suporte-bagagito-perspectiva.webp",
+      "label": "Perspectiva",
+      "alt": "Suporte da tampa do bagagito visto em perspectiva"
+    }
+  ],
+  "13": [
+    {
+      "src": "/products/tampa-reservatorio-clean.jpg",
+      "label": "Foto da peça",
+      "alt": "Tampa verde do reservatório do radiador vista de perto"
+    }
+  ],
+  "14": [
+    {
+      "src": "/products/gallery/four-by-four-installed.jpg",
+      "label": "No veículo",
+      "alt": "Emblema 4 x 4 instalado na traseira do Grand Vitara"
+    }
+  ],
+  "15": [
+    {
+      "src": "/products/gallery/trava-console-real.webp",
+      "label": "Foto da peça",
+      "alt": "Trava do console central vista de perto"
+    }
+  ],
+  "16": [
+    {
+      "src": "/products/gallery/estepe-no-veiculo.webp",
+      "label": "No veículo",
+      "alt": "Emblema aplicado à capa do estepe do Grand Vitara"
+    },
+    {
+      "src": "/products/gallery/estepe-vista-traseira.webp",
+      "label": "Vista traseira",
+      "alt": "Vista traseira do Grand Vitara com a capa do estepe"
+    }
+  ],
+  "17": [
+    {
+      "src": "/products/gallery/banco-acabamento-frente.webp",
+      "label": "Vista frontal",
+      "alt": "Acabamento do banco traseiro visto de frente"
+    },
+    {
+      "src": "/products/gallery/banco-acabamento-verso.webp",
+      "label": "Encaixes",
+      "alt": "Encaixes do acabamento do banco traseiro"
+    },
+    {
+      "src": "/products/gallery/banco-acabamento-detalhe.webp",
+      "label": "Detalhe da peça",
+      "alt": "Formato do acabamento do banco traseiro"
+    }
+  ],
+  "18": [
+    {
+      "src": "/products/gallery/door-trim-installed-one.jpg",
+      "label": "Na porta",
+      "alt": "Acabamento do puxador interno instalado na porta"
+    },
+    {
+      "src": "/products/gallery/door-trim-installed-two.jpg",
+      "label": "Vista do interior",
+      "alt": "Acabamento do puxador no interior do Grand Vitara"
+    }
+  ]
+};
 const pieces = catalogProducts.map(product=>product.name);
 const catalogCategories = ['Todos', ...new Set(catalogProducts.map(product=>product.category.split(' / ').pop()).map(category=>category[0]+category.slice(1).toLowerCase()))];
 const normalizeSearch = value=>value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
@@ -87,112 +308,116 @@ function whatsappFor(product,variant){
  const message = `Olá! Tenho interesse em ${name} para o Suzuki Grand Vitara.${options} Pode me informar o preço, a disponibilidade e o frete?`;
  return `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(message)}`;
 }
-const notes = [['Aro de acabamento','Contorno externo do conjunto.'],['Lâminas direcionais','Direcionamento do fluxo de ar.'],['Vedação','Interface entre os componentes.'],['Fixação traseira','Parte posterior do conjunto.'],['Carcaça interna','Estrutura central do difusor.']];
-function Brand({onNavigate}){return <a className="brand" href="#inicio" onClick={onNavigate} aria-label="3D CAR — início"><img src="/brand-3dcar.png" alt="Logo da 3D CAR"/><span>3D<span>CAR</span><small>PEÇAS EM 3D</small></span></a>}
-function App(){
- const [theme,setTheme]=useState(()=>localStorage.getItem('3dcar-theme')||'dark');
- const [selected,setSelected]=useState(0),[zoom,setZoom]=useState(1),[labels,setLabels]=useState(true),[viewMode,setViewMode]=useState('3d'),[detailOpen,setDetailOpen]=useState(false),[catalogTransition,setCatalogTransition]=useState('');
- const [variantSelections,setVariantSelections]=useState({});
- const [search,setSearch]=useState(''),[category,setCategory]=useState('Todos');
- const [imageStatus,setImageStatus]=useState({}),[stageStatus,setStageStatus]=useState('ready');
- const grid=useRef(null),previousView=useRef(null);
- const stage=useRef(null),isDiffuser=selected===0,selectedProduct=catalogProducts[selected],productCopy=productCopyByName[selectedProduct.name],activeVariant=selectedProduct.variants?.[variantSelections[selected]??0],activeImage=activeVariant?.image||selectedProduct.image;
- const visibleProducts=catalogProducts.map((product,index)=>({product,index})).filter(({product})=>(category==='Todos'||product.category.endsWith(category.toUpperCase()))&&normalizeSearch(product.name+' '+product.vehicle+' '+product.category).includes(normalizeSearch(search)));
- useEffect(()=>{document.documentElement.dataset.theme=theme;localStorage.setItem('3dcar-theme',theme)},[theme]);
- useLayoutEffect(()=>{
-  if(!detailOpen)return;
-  const previousBodyOverflow=document.body.style.overflow;
-  const previousRootOverflow=document.documentElement.style.overflow;
-  document.body.style.overflow='hidden';
-  document.documentElement.style.overflow='hidden';
-  return()=>{
-   document.body.style.overflow=previousBodyOverflow;
-   document.documentElement.style.overflow=previousRootOverflow;
+function App() {
+ const [selected, setSelected] = useState(0);
+ const [detailOpen, setDetailOpen] = useState(false);
+ const [salesOpen, setSalesOpen] = useState(false);
+ const [catalogTransition, setCatalogTransition] = useState('');
+ const [variantSelections, setVariantSelections] = useState({});
+ const [search, setSearch] = useState('');
+ const [category, setCategory] = useState('Todos');
+ const [imageStatus, setImageStatus] = useState({});
+ const backButton = useRef(null);
+ const catalogCards = useRef({});
+ const selectedProduct = catalogProducts[selected];
+ const productCopy = productCopyByName[selectedProduct.name];
+ const variantIndex = variantSelections[selected] ?? 0;
+ const activeVariant = selectedProduct.variants?.[variantIndex];
+ const visibleProducts = catalogProducts.map((product, index) => ({ product, index })).filter(({ product }) =>
+  (category === 'Todos' || product.category.endsWith(category.toUpperCase())) &&
+  normalizeSearch(product.name + ' ' + product.vehicle + ' ' + product.category).includes(normalizeSearch(search))
+ );
+ useLayoutEffect(() => {
+  if (!detailOpen) return;
+  const bodyOverflow = document.body.style.overflow;
+  const rootOverflow = document.documentElement.style.overflow;
+  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
+  document.getElementById('produtos').scrollTop = 0;
+  backButton.current?.focus({ preventScroll: true });
+  return () => {
+   document.body.style.overflow = bodyOverflow;
+   document.documentElement.style.overflow = rootOverflow;
   };
- },[detailOpen]);
- useEffect(()=>{if(detailOpen&&(viewMode==='3d'||(isDiffuser&&viewMode==='exploded')))import('@google/model-viewer').catch(()=>setStageStatus('error'))},[detailOpen,viewMode]);
- useLayoutEffect(()=>{if(!catalogTransition)return;const targets=document.querySelectorAll(detailOpen?'#produtos > .catalog-detail-bar, #produtos > .product-layout':'#produtos > .catalog-bar, #produtos > .product-shelf'),reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches,distance=reduced?18:64,duration=reduced?300:700,direction=catalogTransition==='forward'?1:-1,animations=[...targets].map((element,index)=>element.animate([{opacity:reduced?0.65:0,transform:`translateX(${distance*direction}px)`},{opacity:1,transform:'translateX(0)'}],{duration,delay:reduced?0:index*45,easing:'cubic-bezier(.22,.61,.36,1)',fill:'both'}));return()=>animations.forEach(animation=>animation.cancel())},[catalogTransition,detailOpen]);
- useLayoutEffect(()=>{
-  const previous=previousView.current;
-  previousView.current={detailOpen,selected,viewMode};
-  if(!detailOpen||!previous?.detailOpen||previous.selected!==selected||previous.viewMode===viewMode)return;
-  const media=stage.current?.querySelector(':scope > .product-model, :scope > .product-art, :scope > .vehicle-art, :scope > .product-photo-art');
-  if(!media)return;
-  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches,positions={ '3d':0,photo:0,exploded:1,vehicle:2 },direction=(positions[viewMode]??0)>=(positions[previous.viewMode]??0)?1:-1,distance=reduced?10:42;
-  const animation=media.animate([{opacity:.35,translate:`${direction*distance}px 0`},{opacity:1,translate:'0 0'}],{duration:reduced?220:620,easing:'cubic-bezier(.22,.61,.36,1)',fill:'both'});
-  return()=>animation.cancel();
- },[detailOpen,selected,viewMode,activeImage]);
- useLayoutEffect(()=>{
-  if(!detailOpen)return;
-  const media=stage.current?.querySelector('model-viewer,img');
-  if(!media)return;
-  const source=media.localName==='model-viewer'?(isDiffuser?(viewMode==='exploded'?'/products/difusor-grand-vitara-exploded.glb':viewMode==='3d'?'/products/difusor-grand-vitara.glb':null):viewMode==='3d'?catalogProducts[selected].model:null):null;
-  const loaded=()=>{setStageStatus('ready');if(media.localName==='model-viewer'&&media.getAttribute('animation-name')==='Desmontar')media.play({repetitions:1})},failed=()=>setStageStatus('error');
-  media.addEventListener('load',loaded);media.addEventListener('error',failed);
-  if(media.localName==='model-viewer'){
-   if(viewMode==='exploded'){media.setAttribute('animation-name','Desmontar');media.setAttribute('poster','/products/difusor-exploded.png')}else{media.removeAttribute('animation-name');media.removeAttribute('poster')}
-   const sourceMatches=source&&media.getAttribute('src')===source;
-   if(source&&!sourceMatches)media.setAttribute('src',source);
-   setStageStatus(sourceMatches&&media.loaded?'ready':'loading');
-   if(sourceMatches&&media.loaded&&viewMode==='exploded')media.play({repetitions:1});
-  }
-  else setStageStatus(media.complete?(media.naturalWidth?'ready':'error'):'loading');
-  return()=>{media.removeEventListener('load',loaded);media.removeEventListener('error',failed)};
- },[detailOpen,selected,viewMode,activeImage]);
- useLayoutEffect(()=>{
-  if(detailOpen||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  const title=document.querySelector('.catalog-title > span');
-  const animation=title?.animate([{transform:'translateY(110%)'},{transform:'translateY(0)'}],{duration:460,easing:'cubic-bezier(.22,.61,.36,1)',fill:'backwards'});
-  return()=>animation?.cancel();
- },[detailOpen]);
- useLayoutEffect(()=>{
-  if(detailOpen||!grid.current||window.matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window))return;
-  const cards=[...grid.current.querySelectorAll('.product-card')],animations=[],mobile=window.matchMedia('(max-width: 760px)').matches;
-  cards.forEach(card=>card.classList.add('is-reveal-pending'));
-  const observer=new IntersectionObserver(entries=>{
-   entries.forEach(entry=>{
-    if(!entry.isIntersecting)return;
-    const card=entry.target;
-    card.classList.remove('is-reveal-pending');
-    animations.push(card.animate([{opacity:0,transform:'translateY('+(mobile?10:22)+'px)'},{opacity:1,transform:'translateY(0)'}],{duration:mobile?300:420,delay:(Number(card.dataset.revealOrder)%(mobile?2:3))*65,easing:'cubic-bezier(.22,.61,.36,1)',fill:'backwards'}));
-    observer.unobserve(card);
-   });
-  },{threshold:.08,rootMargin:'0px 0px -16px 0px'});
-  cards.forEach(card=>observer.observe(card));
-  return()=>{observer.disconnect();animations.forEach(animation=>animation.cancel());cards.forEach(card=>card.classList.remove('is-reveal-pending'))};
- },[detailOpen,search,category]);
- function recordImage(image,status){setImageStatus(current=>current[image]===status?current:{...current,[image]:status})}
- function clearFilters(){setSearch('');setCategory('Todos')}
- function reset(){setZoom(1);setLabels(true)}
- function navigateCatalog(event,target='produtos'){
-  if(event&&(event.metaKey||event.ctrlKey||event.shiftKey||event.altKey))return;
-  event?.preventDefault();
-  setCatalogTransition(detailOpen?'back':'');
-  setDetailOpen(false);
-  reset();
-  window.history.replaceState(null,'','#'+target);
-  requestAnimationFrame(()=>document.getElementById(target)?.scrollIntoView({behavior:'smooth',block:'start'}));
+ }, [detailOpen]);
+ useLayoutEffect(() => {
+  if (!catalogTransition || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const targets = document.querySelectorAll(detailOpen ? '#produtos > .catalog-detail-bar, #produtos > .product-layout' : '#produtos > .product-shelf');
+  const direction = catalogTransition === 'forward' ? 1 : -1;
+  const animations = [...targets].map((element, index) => element.animate(
+   [{ opacity: 0, transform: 'translateX(' + (16 * direction) + 'px)' }, { opacity: 1, transform: 'translateX(0)' }],
+   { duration: 240, delay: index * 20, easing: 'cubic-bezier(.22,.61,.36,1)', fill: 'both' }
+  ));
+  return () => animations.forEach(animation => animation.cancel());
+ }, [catalogTransition, detailOpen]);
+ function recordImage(image, status) {
+  setImageStatus(current => current[image] === status ? current : { ...current, [image]: status });
  }
- async function fullscreen(){if(document.fullscreenElement)await document.exitFullscreen();else if(stage.current?.requestFullscreen)await stage.current.requestFullscreen()}
- return <><header className={`catalog-header${detailOpen ? " is-detail-open" : ""}`}><Brand onNavigate={event=>navigateCatalog(event,'inicio')}/><a className="sales-shortcut" href="#lojas">Onde comprar</a><a className="header-contact" href={whatsapp} target="_blank" rel="noreferrer">Fale com a 3D CAR</a><button className="theme-toggle" type="button" onClick={()=>setTheme(theme==='dark'?'light':'dark')} aria-label={theme==='dark'?'Ativar modo claro':'Ativar modo escuro'} title={theme==='dark'?'Ativar modo claro':'Ativar modo escuro'}>{theme==='dark'?<Sun size={17}/>:<Moon size={17}/>}<span>{theme==='dark'?'Claro':'Escuro'}</span></button></header><main id="inicio">
-
- <section className={'catalog catalog-refresh '+(detailOpen?'product-detail ':'')+(catalogTransition?'catalog-transition-'+catalogTransition:'')} id="produtos" aria-label="Catálogo de peças">{detailOpen ? <>
-<div className="catalog-bar catalog-detail-bar"><button className="back-to-catalog" type="button" onClick={navigateCatalog}>← Voltar ao catálogo</button><span className="detail-breadcrumb">{selectedProduct.category.split(' / ').pop().toLowerCase().replace(/^./, letter=>letter.toUpperCase())} / {selectedProduct.vehicle}</span></div>
- <ProductDetails product={selectedProduct} copy={productCopy} variantIndex={variantSelections[selected]??0} onVariantChange={index=>setVariantSelections(current=>({...current,[selected]:index}))} isDiffuser={isDiffuser} contactHref={whatsappFor(selectedProduct,activeVariant)}/></> : <>
-<div className="catalog-bar"><span>CATÁLOGO / GRAND VITARA</span><span>{String(catalogProducts.length).padStart(2,'0')} PRODUTOS</span></div>
-<div className="product-shelf">
-  <div className="product-shelf-intro"><span className="shelf-eyebrow">PEÇAS · SUZUKI GRAND VITARA</span><h1 className="catalog-title"><span>Grand Vitara<span className="catalog-title-dot" aria-hidden="true">.</span></span></h1><p>Peças e variações para o Suzuki Grand Vitara.</p></div>
-  <div className="catalog-tools">
-   <div className="catalog-controls">
-    <div className="catalog-search" role="search" aria-label="Busca do catálogo"><Search aria-hidden="true"/><label className="visually-hidden" htmlFor="catalog-search">Buscar peça</label><input id="catalog-search" type="search" placeholder="Qual peça você procura?" value={search} onChange={event=>setSearch(event.target.value)} autoComplete="off"/>{search&&<button type="button" aria-label="Limpar busca" onClick={()=>{setSearch('');document.getElementById('catalog-search')?.focus()}}><X aria-hidden="true"/></button>}</div>
-    <div className="catalog-categories" role="group" aria-label="Categorias">{catalogCategories.map(item=><button key={item} type="button" aria-pressed={category===item} aria-controls="catalog-grid" onClick={()=>setCategory(item)}>{item}</button>)}</div>
+ function showSales(event) {
+  event?.preventDefault();
+  setSalesOpen(true);
+ }
+ function navigateCatalog(event, target = 'produtos') {
+  if (event && (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)) return;
+  event?.preventDefault();
+  setCatalogTransition(detailOpen ? 'back' : '');
+  setDetailOpen(false);
+  window.history.replaceState(null, '', '#' + target);
+  requestAnimationFrame(() => {
+   document.getElementById(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+   if (target === 'produtos') catalogCards.current[selected]?.focus({ preventScroll: true });
+  });
+ }
+ return <>
+  <SiteHeader onHome={event => navigateCatalog(event, 'inicio')} onWhereToBuy={showSales} whatsapp={whatsapp} detailOpen={detailOpen}/>
+  <Cover onExplore={navigateCatalog} onWhereToBuy={showSales}/>
+  <main>
+   <section className={'catalog catalog-refresh ' + (detailOpen ? 'product-detail ' : '') + (catalogTransition ? 'catalog-transition-' + catalogTransition : '')} id="produtos" aria-label={detailOpen ? 'Detalhes de ' + selectedProduct.name : 'Catálogo de peças'}>
+    {detailOpen ? <>
+     <div className="catalog-bar catalog-detail-bar">
+      <button ref={backButton} className="back-to-catalog" type="button" onClick={navigateCatalog}>← Voltar ao catálogo</button>
+      <span className="detail-breadcrumb">{selectedProduct.category.split(' / ').pop().toLowerCase().replace(/^./, letter => letter.toUpperCase())} / {selectedProduct.vehicle}</span>
+     </div>
+     <ProductDetails product={selectedProduct} copy={productCopy} extras={productGalleryPhotos[selected]} variantIndex={variantIndex} onVariantChange={index => setVariantSelections(current => ({ ...current, [selected]: index }))} isDiffuser={selected === 0} contactHref={whatsappFor(selectedProduct, activeVariant)}/>
+    </> : <div className="product-shelf">
+     <div className="product-shelf-intro">
+      <h1 className="catalog-title">Peças para o Grand Vitara</h1>
+      <p>Encontre a peça e escolha a opção certa para o seu veículo.</p>
+     </div>
+     <div className="catalog-tools">
+      <div className="catalog-controls">
+       <div className="catalog-search" role="search" aria-label="Busca do catálogo">
+        <Search aria-hidden="true"/>
+        <label className="visually-hidden" htmlFor="catalog-search">Buscar peça</label>
+        <input id="catalog-search" type="search" placeholder="Qual peça você procura?" value={search} onChange={event => setSearch(event.target.value)} autoComplete="off"/>
+        {search && <button type="button" aria-label="Limpar busca" onClick={() => { setSearch(''); document.getElementById('catalog-search')?.focus(); }}><X aria-hidden="true"/></button>}
+       </div>
+       <div className="catalog-categories" role="group" aria-label="Categorias">
+        {catalogCategories.map(item => <button key={item} type="button" aria-pressed={category === item} aria-controls="catalog-grid" onClick={() => setCategory(item)}>{item}</button>)}
+       </div>
+      </div>
+      <p className="catalog-result-count" role="status" aria-live="polite" aria-atomic="true">
+       {visibleProducts.length} {visibleProducts.length === 1 ? 'produto' : 'produtos'}{search || category !== 'Todos' ? (visibleProducts.length === 1 ? ' encontrado' : ' encontrados') : ' no catálogo'}
+      </p>
+     </div>
+     <div className="product-shelf-grid" id="catalog-grid">
+      {visibleProducts.map(({ product, index }, position) => <CatalogCard key={product.name} product={product} index={index} position={position} status={imageStatus[product.image]} onImageStatus={recordImage} buttonRef={node => { catalogCards.current[index] = node; }} onOpen={() => { setCatalogTransition('forward'); setSelected(index); setDetailOpen(true); }}/>)}
+     </div>
+     {visibleProducts.length === 0 && <div className="catalog-empty"><Search aria-hidden="true"/><h2>Nenhuma peça encontrada</h2><p>Tente outro nome ou escolha outra categoria.</p><button type="button" onClick={() => { setSearch(''); setCategory('Todos'); }}>Limpar filtros</button></div>}
+    </div>}
+   </section>
+  </main>
+  <footer className="sales-footer" id="lojas">
+   <div className="sales-footer-inner">
+    <div className="sales-footer-copy"><h2>Escolha onde comprar</h2><p>Confira nossos produtos nos canais de venda.</p></div>
+    <div className="sales-channel-links">
+     {salesChannels.map(channel => <a key={channel.name} href={channel.url} target="_blank" rel="noreferrer" aria-label={'Abrir a loja da 3D CAR no ' + channel.name + ' em nova aba'}><strong>{channel.name}</strong><span>Ver produtos <ArrowUpRight aria-hidden="true" size={16}/></span></a>)}
+     <a className="sales-whatsapp" href={whatsapp} target="_blank" rel="noreferrer"><MessageCircle aria-hidden="true" size={20}/><span>Fale com a 3D CAR</span></a>
+    </div>
    </div>
-   <p className="catalog-result-count" role="status" aria-live="polite" aria-atomic="true">{String(visibleProducts.length).padStart(2,'0')} {visibleProducts.length===1?'produto':'produtos'}{search||category!=='Todos'?(visibleProducts.length===1?' encontrado':' encontrados'):' no catálogo'}</p>
-  </div>
-  <div className="product-shelf-grid" id="catalog-grid" ref={grid}>{visibleProducts.map(({product,index},position)=><button key={product.name} className="product-card" data-reveal-order={position} type="button" onClick={()=>{setCatalogTransition('forward');setSelected(index);setViewMode(index===0||catalogProducts[index].model?'3d':'photo');reset();setDetailOpen(true)}} aria-label={`Ver detalhes do ${product.name} para ${product.vehicle}`}><span className={'product-card-visual '+(imageStatus[product.image]==='ready'?'is-loaded':imageStatus[product.image]==='error'?'is-error':'is-loading')} aria-busy={!imageStatus[product.image]}><img src={product.image} loading={position<3?'eager':'lazy'} decoding="async" onLoad={()=>recordImage(product.image,'ready')} onError={()=>recordImage(product.image,'error')} alt={`${product.name} para ${product.vehicle}`} style={{'--card-image-scale':product.cardImageScale||1}}/><span className="product-card-stamp">{product.category}</span>{imageStatus[product.image]==='error'&&<span className="product-image-fallback"><Box aria-hidden="true"/>Imagem indisponível</span>}<span className="product-capabilities">{(index===0||product.model)&&<span><Box aria-hidden="true"/>3D</span>}{product.explodedModel&&<span><Layers aria-hidden="true"/>Desmontado</span>}</span></span><span className="product-card-content"><span className="product-card-kicker">{product.vehicle.toUpperCase()}</span><strong className="product-card-name">{product.name}</strong>{product.variants?.length>0&&<span className="product-card-variants">Opções: {product.variants.map(variant=>variant.label).join(' · ')}</span>}<span className="product-card-link">VER PRODUTO <ArrowUpRight size={15}/></span></span></button>)}</div>
-  {visibleProducts.length===0&&<div className="catalog-empty"><Search aria-hidden="true"/><h2>Nenhuma peça encontrada</h2><p>Tente outro nome ou escolha outra categoria.</p><button type="button" onClick={clearFilters}>Limpar filtros</button></div>}
-</div>
-</>}</section></main><footer className="sales-footer" id="lojas"><div className="sales-footer-inner"><div className="sales-footer-copy"><p className="sales-footer-eyebrow">ONDE COMPRAR</p><h2>Encontre a 3D CAR online</h2><p>Confira nossos produtos nos canais de venda.</p></div><div className="sales-channel-links">{salesChannels.map(channel=><a key={channel.name} href={channel.url} target="_blank" rel="noreferrer" aria-label={`Abrir a loja da 3D CAR no ${channel.name} em nova aba`}><strong>{channel.name}</strong><span>Ver produtos <ArrowUpRight size={15}/></span></a>)}<a className="sales-whatsapp" href={whatsapp} target="_blank" rel="noreferrer" aria-label="Falar com a 3D CAR pelo WhatsApp em nova aba"><MessageCircle size={17}/><span>Fale com a 3D CAR</span></a></div></div></footer></>;
+  </footer>
+  <SalesDialog open={salesOpen} onClose={() => setSalesOpen(false)} channels={salesChannels} whatsapp={whatsapp}/>
+ </>;
 }
 const root=import.meta.hot?.data.root??createRoot(document.getElementById('root'));
 if(import.meta.hot)import.meta.hot.data.root=root;
