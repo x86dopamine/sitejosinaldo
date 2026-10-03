@@ -17,12 +17,12 @@ export function SiteHeader({ onHome, onWhereToBuy, whatsapp, detailOpen = false 
 export default function Cover({ onExplore, onWhereToBuy }) {
   return <section className="vitara-cover" id="inicio" aria-labelledby="vitara-cover-title">
     <figure className="vitara-cover-image" aria-hidden="true">
-      <img className="vitara-cover-photo" src="/grand-vitara-workshop.png" alt="" width="1024" height="576" fetchPriority="high" decoding="async"/>
+      <img className="vitara-cover-photo" src="/grand-vitara-workshop.png" alt="" width="1024" height="576" fetchPriority="high" decoding="async" draggable={false}/>
     </figure>
     <div className="vitara-cover-scene">
       <div className="vitara-cover-copy">
-        <h1 id="vitara-cover-title"><span>Peças para o</span><span>Grand Vitara.</span></h1>
-        <p className="vitara-cover-description">Difusores, puxadores e acabamentos produzidos por impressão 3D.</p>
+        <h1 id="vitara-cover-title"><span>Peças feitas pela 3D CAR</span><span>para o seu Grand Vitara.</span></h1>
+        <p className="vitara-cover-description">Produção em impressão 3D para reposição e acabamento.</p>
         <div className="vitara-cover-actions">
           <a className="brand-button brand-button-primary" href="#produtos" onClick={onExplore}>Ver catálogo <ArrowRight aria-hidden="true"/></a>
           <button className="brand-button brand-button-secondary" type="button" onClick={onWhereToBuy}>Onde comprar</button>
@@ -31,4 +31,3 @@ export default function Cover({ onExplore, onWhereToBuy }) {
     </div>
   </section>;
 }
-

@@ -79,7 +79,7 @@ export default function ProductGallery({ product, extras = [], variantIndex = 0,
     return all.filter((photo, index) => photo.pending || all.findIndex(other => other.src === photo.src) === index);
   }, [product, extras, isDiffuser]);
   const [selectedId, setSelectedId] = useState(product.variants?.length ? `variant-${variantIndex}` : 'main');
-  const [mode, setMode] = useState('photo');
+  const [mode, setMode] = useState(product.model ? '3d' : 'photo');
   const [expanded, setExpanded] = useState(false);
   const strip = useRef(null);
   const dialog = useRef(null);
