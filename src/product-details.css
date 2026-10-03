@@ -125,6 +125,7 @@
   .product-detail > .catalog-detail-bar { flex-wrap: wrap; gap: 12px; font-size: 13px; }
   .product-detail .detail-breadcrumb { gap: 7px; }
   .catalog-refresh.product-detail .product-layout { display: flex; flex-direction: column; gap: 28px; margin-top: 20px; }
+  .catalog-refresh.product-detail .product-media { order: -1; }
   .catalog-refresh.product-detail .product-info { display: block; width: 100%; padding-top: 0; }
   .product-detail .product-summary h1 { margin: 0; font-size: clamp(30px, 7vw, 40px); }
   .product-detail .product-vehicle { margin: 8px 0 16px; font-size: 24px; }
@@ -150,3 +151,4 @@
 @media (prefers-reduced-motion: reduce) {
   .product-detail * { scroll-behavior: auto; }
 }
+
