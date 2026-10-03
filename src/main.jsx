@@ -6,6 +6,7 @@ import './design-system.css';
 import Cover, { SiteHeader } from './Cover.jsx';
 import ProductDetails from './ProductDetails.jsx';
 import CatalogCard from './CatalogCard.jsx';
+import { productGalleryPhotos } from './product-gallery-photos.js';
 import SalesDialog from './SalesDialog.jsx';
 import './catalog-refresh.css';
 import './product-gallery.css';
@@ -14,7 +15,7 @@ const productPhotos = {
  diffuserPair:'/products/gallery/difusor-kit-2.webp',
  rackFrontPassenger:'/products/gallery/catalog-rackFrontPassenger.webp',
  rackRearDriver:'/products/gallery/catalog-rackRearDriver.webp',
- rackRearPassenger:'/products/gallery/catalog-rackRearPassenger.webp',
+ rackRearPassenger:'/products/gallery/ponteira-rack-traseira-passageiro.webp',
  coverOne:'/products/gallery/catalog-coverOne.webp',
  coverTwo:'/products/gallery/catalog-coverTwo.webp',
  coverFive:'/products/gallery/catalog-coverFive.webp',
@@ -43,7 +44,7 @@ const catalogProducts = [
  {name:'Emblema Suzuki Grand Vitara preto',vehicle:'Suzuki Grand Vitara',category:'PEÇA 03 / EXTERIOR',image:productPhotos.blackEmblem,model:'/products/emblema-suzuki-preto.glb',vehicleImage:'/products/emblema-suzuki-preto-no-veiculo.png',vehicleImageFrame:'landscape',disableAutoRotate:true},
  {name:'Emblema traseiro cromado',vehicle:'Suzuki Grand Vitara',category:'PEÇA 04 / EXTERIOR',image:productPhotos.chromeEmblem,model:'/products/emblema-suzuki-cromado.glb',vehicleImage:'/products/emblema-traseiro-suzuki-cromado-no-veiculo.png',vehicleImageFrame:'square',vehicleImageAlt:'Emblema Suzuki Grand Vitara cromado instalado na tampa traseira do veículo'},
  {name:'Puxador interno da porta',vehicle:'Suzuki Grand Vitara',category:'PEÇA 05 / INTERIOR',image:productPhotos.pullerOne,variants:[{label:'1 peça',image:productPhotos.pullerOne,alt:'Um puxador interno da porta Suzuki Grand Vitara'},{label:'2 peças',image:'/products/kit-puxadores-porta-grand-vitara-2-pecas.png',alt:'Kit com dois puxadores internos da porta Suzuki Grand Vitara'},{label:'4 peças',image:'/products/kit-puxadores-porta-grand-vitara.png',alt:'Kit com quatro puxadores internos da porta Suzuki Grand Vitara'}]},
- {name:'Tampa do bagageiro',vehicle:'Suzuki Grand Vitara',category:'PEÇA 06 / EXTERIOR',image:productPhotos.coverOne,variants:[{label:'1 peça',image:productPhotos.coverOne,alt:'Uma tampa do rack do bagageiro para Suzuki Grand Vitara'},{label:'2 peças',image:productPhotos.coverTwo,alt:'Duas tampas do rack do bagageiro para Suzuki Grand Vitara'},{label:'5 peças',image:productPhotos.coverFive,alt:'Cinco tampas do rack do bagageiro para Suzuki Grand Vitara'},{label:'10 peças',image:productPhotos.coverTen,alt:'Kit com dez tampas do rack do bagageiro para Suzuki Grand Vitara'},{label:'12 peças',image:'/products/catalog-placeholder.svg',alt:'Foto do kit de doze tampas em breve',photoPending:true}]},
+ {name:'Tampa do bagageiro',vehicle:'Suzuki Grand Vitara',category:'PEÇA 06 / EXTERIOR',image:productPhotos.coverOne,variants:[{label:'1 peça',image:productPhotos.coverOne,alt:'Uma tampa do rack do bagageiro para Suzuki Grand Vitara'},{label:'2 peças',image:productPhotos.coverTwo,alt:'Duas tampas do rack do bagageiro para Suzuki Grand Vitara'},{label:'5 peças',image:productPhotos.coverFive,alt:'Cinco tampas do rack do bagageiro para Suzuki Grand Vitara'},{label:'10 peças',image:productPhotos.coverTen,alt:'Kit com dez tampas do rack do bagageiro para Suzuki Grand Vitara'}]},
  {name:'Acabamento da ponteira do rack',vehicle:'Suzuki Grand Vitara',category:'PEÇA 07 / EXTERIOR',selectorLabel:'Posição no veículo',image:productPhotos.rackFrontPassenger,variants:[{label:'Dianteira · passageiro',image:productPhotos.rackFrontPassenger,alt:'Acabamento da ponteira dianteira do rack, lado do passageiro'},{label:'Traseira · motorista',image:productPhotos.rackRearDriver,alt:'Acabamento da ponteira traseira do rack, lado do motorista'},{label:'Traseira · passageiro',image:productPhotos.rackRearPassenger,alt:'Acabamento da ponteira traseira do rack, lado do passageiro'}]},
  {name:'Tampa de desbloqueio do câmbio',vehicle:'Suzuki Grand Vitara',category:'PEÇA 08 / INTERIOR',image:productPhotos.gearUnlock},
  {name:'Calota central',vehicle:'Suzuki Grand Vitara',category:'PEÇA 09 / EXTERIOR',image:productPhotos.wheelCap},
@@ -59,223 +60,6 @@ const catalogProducts = [
  {name:'Acabamento do puxador interno da porta',vehicle:'Suzuki Grand Vitara',category:'PEÇA 19 / INTERIOR',image:productPhotos.pullerTrim},
  {name:'Tampa metálica de válvula Capsilone',vehicle:'Suzuki',category:'PEÇA 20 / REPOSIÇÃO',image:'/products/tampa-valvula-capsilone.png'}
 ];
-const productGalleryPhotos = {
-  "0": [
-    {
-      "src": "/products/gallery/difusor-frente-aberto.webp",
-      "label": "Lâminas abertas",
-      "alt": "Difusor de ar com as lâminas abertas"
-    },
-    {
-      "src": "/products/gallery/difusor-frente-fechado.webp",
-      "label": "Lâminas fechadas",
-      "alt": "Difusor de ar com as lâminas fechadas"
-    },
-    {
-      "src": "/products/gallery/difusor-lateral-real.webp",
-      "label": "Vista lateral",
-      "alt": "Encaixes laterais do difusor de ar"
-    },
-    {
-      "src": "/products/gallery/difusor-encaixes.webp",
-      "label": "Encaixe traseiro",
-      "alt": "Parte traseira do difusor de ar"
-    },
-    {
-      "src": "/products/gallery/difusor-mecanismo.webp",
-      "label": "Mecanismo",
-      "alt": "Mecanismo das lâminas do difusor de ar"
-    },
-    {
-      "src": "/products/gallery/difusor-painel-aberto.webp",
-      "label": "No painel",
-      "alt": "Difusor aberto instalado na saída lateral do painel"
-    },
-    {
-      "src": "/products/gallery/difusor-painel-fechado.webp",
-      "label": "No painel · fechado",
-      "alt": "Difusor fechado instalado no painel"
-    },
-    {
-      "src": "/products/gallery/difusor-painel-motorista.webp",
-      "label": "Lado do motorista",
-      "alt": "Difusor instalado no lado do motorista"
-    }
-  ],
-  "1": [
-    {
-      "src": "/products/gallery/emblema-grade-instalado.webp",
-      "label": "No veículo",
-      "alt": "Emblema vermelho instalado na grade dianteira do Grand Vitara"
-    }
-  ],
-  "3": [
-    {
-      "src": "/products/gallery/emblema-cromado-frente.webp",
-      "label": "Vista frontal",
-      "alt": "Emblema Suzuki cromado visto de frente"
-    },
-    {
-      "src": "/products/gallery/emblema-cromado-perspectiva.webp",
-      "label": "Perspectiva",
-      "alt": "Emblema Suzuki cromado em perspectiva"
-    },
-    {
-      "src": "/products/gallery/emblema-cromado-lateral.webp",
-      "label": "Vista lateral",
-      "alt": "Espessura e acabamento do emblema cromado"
-    }
-  ],
-  "4": [
-    {
-      "src": "/products/gallery/puxador-frente-real.webp",
-      "label": "Vista frontal",
-      "alt": "Puxador interno da porta visto de frente"
-    },
-    {
-      "src": "/products/gallery/puxador-verso-real.webp",
-      "label": "Parte traseira",
-      "alt": "Parte traseira do puxador interno da porta"
-    },
-    {
-      "src": "/products/gallery/puxador-lateral-real.webp",
-      "label": "Vista lateral",
-      "alt": "Puxador interno da porta visto de lado"
-    },
-    {
-      "src": "/products/gallery/puxador-textura-real.webp",
-      "label": "Textura e encaixes",
-      "alt": "Textura e encaixes do puxador interno"
-    },
-    {
-      "src": "/products/gallery/puxador-instalado.webp",
-      "label": "Instalado",
-      "alt": "Puxador interno instalado na porta"
-    },
-    {
-      "src": "/products/gallery/puxador-porta-bege.webp",
-      "label": "Na porta",
-      "alt": "Puxador instalado em uma porta com acabamento bege"
-    }
-  ],
-  "5": [
-    {
-      "src": "/products/gallery/tampa-rack-frente.webp",
-      "label": "Detalhe · frente",
-      "alt": "Uma tampa do rack vista pela frente"
-    },
-    {
-      "src": "/products/gallery/tampa-rack-encaixes.webp",
-      "label": "Detalhe · encaixes",
-      "alt": "Encaixes na parte traseira de uma tampa do rack"
-    }
-  ],
-  "6": [
-    {
-      "src": "/products/gallery/ponteira-rack-frente.webp",
-      "label": "Dianteira · frente",
-      "alt": "Vista frontal da ponteira dianteira do rack",
-      "variantIndex": 0
-    },
-    {
-      "src": "/products/gallery/ponteira-rack-verso.webp",
-      "label": "Dianteira · encaixes",
-      "alt": "Encaixes da ponteira dianteira do rack",
-      "variantIndex": 0
-    }
-  ],
-  "8": [
-    {
-      "src": "/products/gallery/calota-frente-real.webp",
-      "label": "Detalhe · frente",
-      "alt": "Calota central com emblema Suzuki vermelho vista de frente"
-    },
-    {
-      "src": "/products/gallery/calota-verso-real.webp",
-      "label": "Detalhe · verso",
-      "alt": "Encaixes traseiros da calota central"
-    },
-    {
-      "src": "/products/gallery/calota-instalada.webp",
-      "label": "Na roda",
-      "alt": "Calota central instalada na roda do estepe"
-    }
-  ],
-  "11": [
-    {
-      "src": "/products/gallery/suporte-bagagito-frente.webp",
-      "label": "Vista frontal",
-      "alt": "Suporte da tampa do bagagito e seus pontos de fixação"
-    },
-    {
-      "src": "/products/gallery/suporte-bagagito-perspectiva.webp",
-      "label": "Perspectiva",
-      "alt": "Suporte da tampa do bagagito visto em perspectiva"
-    }
-  ],
-  "13": [
-    {
-      "src": "/products/tampa-reservatorio-clean.jpg",
-      "label": "Foto da peça",
-      "alt": "Tampa verde do reservatório do radiador vista de perto"
-    }
-  ],
-  "14": [
-    {
-      "src": "/products/gallery/four-by-four-installed.jpg",
-      "label": "No veículo",
-      "alt": "Emblema 4 x 4 instalado na traseira do Grand Vitara"
-    }
-  ],
-  "15": [
-    {
-      "src": "/products/gallery/trava-console-real.webp",
-      "label": "Foto da peça",
-      "alt": "Trava do console central vista de perto"
-    }
-  ],
-  "16": [
-    {
-      "src": "/products/gallery/estepe-no-veiculo.webp",
-      "label": "No veículo",
-      "alt": "Emblema aplicado à capa do estepe do Grand Vitara"
-    },
-    {
-      "src": "/products/gallery/estepe-vista-traseira.webp",
-      "label": "Vista traseira",
-      "alt": "Vista traseira do Grand Vitara com a capa do estepe"
-    }
-  ],
-  "17": [
-    {
-      "src": "/products/gallery/banco-acabamento-frente.webp",
-      "label": "Vista frontal",
-      "alt": "Acabamento do banco traseiro visto de frente"
-    },
-    {
-      "src": "/products/gallery/banco-acabamento-verso.webp",
-      "label": "Encaixes",
-      "alt": "Encaixes do acabamento do banco traseiro"
-    },
-    {
-      "src": "/products/gallery/banco-acabamento-detalhe.webp",
-      "label": "Detalhe da peça",
-      "alt": "Formato do acabamento do banco traseiro"
-    }
-  ],
-  "18": [
-    {
-      "src": "/products/gallery/door-trim-installed-one.jpg",
-      "label": "Na porta",
-      "alt": "Acabamento do puxador interno instalado na porta"
-    },
-    {
-      "src": "/products/gallery/door-trim-installed-two.jpg",
-      "label": "Vista do interior",
-      "alt": "Acabamento do puxador no interior do Grand Vitara"
-    }
-  ]
-};
 const pieces = catalogProducts.map(product=>product.name);
 const catalogCategories = ['Todos', ...new Set(catalogProducts.map(product=>product.category.split(' / ').pop()).map(category=>category[0]+category.slice(1).toLowerCase()))];
 const normalizeSearch = value=>value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
@@ -287,7 +71,7 @@ const productCopyByName = {
  'Emblema Suzuki Grand Vitara preto': {location:'EMBLEMAS EXTERNOS',lead:'Emblema preto para a parte traseira do Grand Vitara.',description:'Emblema preto para aplicação traseira no Grand Vitara. Fabricado por impressão 3D, com resistência ao calor e proteção contra raios UV. Garantia de 6 meses.',facts:[['Posição','Traseira'],['Acabamento','Preto'],['Proteção','Resistência térmica e UV · garantia de 6 meses']]},
  'Emblema traseiro cromado': {location:'TAMPA TRASEIRA',lead:'Emblema Suzuki cromado para a traseira.',description:'Emblema cromado para a tampa traseira do Grand Vitara. Instalação com fita adesiva automotiva de alta fixação. Garantia de 6 meses.',facts:[['Posição','Traseira'],['Acabamento','Cromado'],['Fixação','Fita adesiva automotiva de alta fixação']]},
  'Puxador interno da porta': {location:'PORTAS INTERNAS',lead:'Puxador interno para as portas do Grand Vitara.',description:'Fabricado por impressão 3D. Escolha uma unidade, um par para portas dianteiras ou traseiras, ou o kit com quatro puxadores. O par tem acabamento preto texturizado em ABS Premium.',facts:[['Fabricação','Impressão 3D'],['Material do par','ABS Premium'],['Opções','1 unidade · par · 4 unidades']]},
- 'Tampa do bagageiro': {location:'RACK DO TETO',lead:'Tampas de acabamento para o rack do teto do Grand Vitara G3.',description:'Tampas em ABS Premium, fabricadas por impressão 3D e resistentes à pressão mecânica e à temperatura. Fixação por encaixe sob pressão. Escolha entre 1, 2, 5, 10 ou 12 peças.',facts:[['Fabricação','Impressão 3D'],['Material','ABS Premium'],['Opções','1 · 2 · 5 · 10 · 12 peças']]},
+ 'Tampa do bagageiro': {location:'RACK DO TETO',lead:'Tampas de acabamento para o rack do teto do Grand Vitara G3.',description:'Tampas em ABS Premium, fabricadas por impressão 3D e resistentes à pressão mecânica e à temperatura. Fixação por encaixe sob pressão. Escolha entre 1, 2, 5 ou 10 peças.',facts:[['Fabricação','Impressão 3D'],['Material','ABS Premium'],['Opções','1 · 2 · 5 · 10 peças']]},
  'Acabamento da ponteira do rack': {location:'EXTREMIDADES DO RACK',lead:'Acabamento para as ponteiras do rack, vendido por unidade.',description:'Compatível com Grand Vitara 2009–2015 equipado com rack original. Escolha dianteira do passageiro, traseira do motorista ou traseira do passageiro. As ponteiras dianteiras e traseiras têm formatos diferentes. Acabamento preto, com garantia de 6 meses.',facts:[['Posições','Dianteira passageiro · traseira motorista · traseira passageiro'],['Aplicação','Grand Vitara 2009–2015 · rack original'],['Acabamento','Preto · garantia de 6 meses']]},
  'Tampa de desbloqueio do câmbio': {location:'SELETORA DO CÂMBIO',lead:'Tampa para o ponto de desbloqueio da seletora.',description:'Fabricada por impressão 3D em ABS Premium, resistente à pressão mecânica e à temperatura. Encaixe por pressão. Garantia de 1 ano.',facts:[['Local','Seletora do câmbio'],['Material','ABS Premium'],['Fabricação','Impressão 3D · garantia de 1 ano']]},
  'Calota central': {location:'CENTRO DA RODA',lead:'Kit com quatro calotas centrais pretas.',description:'Kit com 4 unidades para o centro das rodas do Grand Vitara GV3. Produzidas por impressão 3D em ABS Premium, com encaixe por pressão. Garantia de 2 meses.',facts:[['Conteúdo','4 unidades'],['Material','ABS Premium'],['Acabamento','Preto · garantia de 2 meses']]},
@@ -321,7 +105,8 @@ function App() {
  const catalogCards = useRef({});
  const selectedProduct = catalogProducts[selected];
  const productCopy = productCopyByName[selectedProduct.name];
- const variantIndex = variantSelections[selected] ?? 0;
+ const rememberedVariantIndex = variantSelections[selected] ?? 0;
+ const variantIndex = selectedProduct.variants?.[rememberedVariantIndex] ? rememberedVariantIndex : 0;
  const activeVariant = selectedProduct.variants?.[variantIndex];
  const visibleProducts = catalogProducts.map((product, index) => ({ product, index })).filter(({ product }) =>
   (category === 'Todos' || product.category.endsWith(category.toUpperCase())) &&
@@ -422,6 +207,7 @@ function App() {
 const root=import.meta.hot?.data.root??createRoot(document.getElementById('root'));
 if(import.meta.hot)import.meta.hot.data.root=root;
 root.render(<App/>);
+
 
 
 
