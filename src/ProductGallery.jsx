@@ -29,6 +29,8 @@ function ProductModel({ source, name, disableAutoRotate, exploded }) {
     setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     const loaded = () => {
       if (!active) return;
+      element.pause();
+      element.currentTime = 0;
       setStatus('ready');
       if (exploded) element.play({ repetitions: 1 });
     };
@@ -44,7 +46,9 @@ function ProductModel({ source, name, disableAutoRotate, exploded }) {
     element.fieldOfView = 'auto';
     element.resetTurntableRotation();
     element.jumpCameraToGoal();
-    if (exploded) { element.currentTime = 0; element.play({ repetitions: 1 }); }
+    element.pause();
+    element.currentTime = 0;
+    if (exploded) element.play({ repetitions: 1 });
   }
   function fullscreen() {
     if (document.fullscreenElement) document.exitFullscreen();
@@ -84,7 +88,7 @@ export default function ProductGallery({ product, extras = [], variantIndex = 0,
   const photo = photos[activeIndex];
   const photoCount = photos.filter(item => !item.pending).length;
   const photoPosition = photos.slice(0, activeIndex + 1).filter(item => !item.pending).length;
-  const assembledModel = isDiffuser ? '/products/difusor-grand-vitara.glb' : product.model;
+  const assembledModel = product.model;
   const explodedModel = product.explodedModel;
   const modelSource = mode === 'exploded' ? explodedModel : assembledModel;
 

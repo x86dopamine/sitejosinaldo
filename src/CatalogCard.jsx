@@ -3,7 +3,7 @@ import { ArrowUpRight, Box, Layers } from 'lucide-react';
 export default function CatalogCard({ product, index, position, status, onOpen, onImageStatus, buttonRef }) {
   const category = product.category.split(' / ').pop().toLocaleLowerCase('pt-BR');
   const categoryLabel = category.charAt(0).toUpperCase() + category.slice(1);
-  const hasModel = index === 0 || Boolean(product.model);
+  const hasModel = Boolean(product.model);
   return <button ref={buttonRef} className="product-card" type="button" onClick={onOpen} aria-label={'Ver detalhes de ' + product.name + ' para ' + product.vehicle}>
     <span className={'product-card-visual ' + (status === 'ready' ? 'is-loaded' : status === 'error' ? 'is-error' : 'is-loading')} aria-busy={!status}>
       <img src={product.image} loading={position < 4 ? 'eager' : 'lazy'} decoding="async" onLoad={() => onImageStatus(product.image, 'ready')} onError={() => onImageStatus(product.image, 'error')} alt={product.name + ' para ' + product.vehicle}/>
