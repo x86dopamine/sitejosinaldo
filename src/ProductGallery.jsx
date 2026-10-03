@@ -18,7 +18,7 @@ function ProductPhoto({ photo, onOpen }) {
   </>;
 }
 
-function ProductModel({ source, name, disableAutoRotate, exploded }) {
+function ProductModel({ source, name, disableAutoRotate, exploded, animationTime = 0 }) {
   const model = useRef(null);
   const [status, setStatus] = useState('loading');
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -30,7 +30,7 @@ function ProductModel({ source, name, disableAutoRotate, exploded }) {
     const loaded = () => {
       if (!active) return;
       element.pause();
-      element.currentTime = 0;
+      element.currentTime = animationTime;
       setStatus('ready');
       if (exploded) element.play({ repetitions: 1 });
     };
@@ -39,7 +39,7 @@ function ProductModel({ source, name, disableAutoRotate, exploded }) {
     element.addEventListener('error', failed);
     import('@google/model-viewer').then(() => { if (element.loaded) loaded(); }).catch(failed);
     return () => { active = false; element.removeEventListener('load', loaded); element.removeEventListener('error', failed); };
-  }, [source, exploded]);
+  }, [source, exploded, animationTime]);
   function reset() {
     const element = model.current;
     element.cameraOrbit = 'auto auto auto';
@@ -47,7 +47,7 @@ function ProductModel({ source, name, disableAutoRotate, exploded }) {
     element.resetTurntableRotation();
     element.jumpCameraToGoal();
     element.pause();
-    element.currentTime = 0;
+    element.currentTime = animationTime;
     if (exploded) element.play({ repetitions: 1 });
   }
   function fullscreen() {
@@ -55,7 +55,7 @@ function ProductModel({ source, name, disableAutoRotate, exploded }) {
     else model.current.closest('.gallery-viewport').requestFullscreen();
   }
   return <>
-    <model-viewer ref={model} className="gallery-model" src={source} alt={`${name}${exploded ? ' desmontado' : ''} em 3D`} camera-controls touch-action="pan-y" environment-image="neutral" shadow-intensity="1" exposure="1.05" interaction-prompt="none" {...(exploded ? { 'animation-name': 'Desmontar', poster: '/products/difusor-exploded.png' } : {})} {...(disableAutoRotate || reducedMotion || exploded ? {} : { 'auto-rotate': '', 'rotation-per-second': '8deg' })} />
+    <model-viewer ref={model} className="gallery-model" src={source} alt={`${name}${exploded ? ' desmontado' : ''} em 3D`} camera-controls touch-action="pan-y" environment-image="neutral" shadow-intensity="1" exposure="1.05" interaction-prompt="none" {...(animationTime > 0 ? { 'animation-name': 'Abrir_Fechar' } : {})} {...(exploded ? { 'animation-name': 'Desmontar', poster: '/products/difusor-exploded.png' } : {})} {...(disableAutoRotate || reducedMotion || exploded ? {} : { 'auto-rotate': '', 'rotation-per-second': '8deg' })} />
     <div className="gallery-model-controls" role="group" aria-label="Controles do modelo 3D">
       <button type="button" aria-label="Aproximar modelo 3D" disabled={status !== 'ready'} onClick={() => model.current.zoom(1)}><Plus/></button>
       <button type="button" aria-label="Afastar modelo 3D" disabled={status !== 'ready'} onClick={() => model.current.zoom(-1)}><Minus/></button>
@@ -143,7 +143,7 @@ export default function ProductGallery({ product, extras = [], variantIndex = 0,
       {explodedModel && <button type="button" aria-pressed={mode === 'exploded'} onClick={() => setMode('exploded')}><Layers/>Desmontado</button>}
     </div>
     <div className="gallery-viewport">
-      {mode === 'photo' ? <><ProductPhoto key={photo.id} photo={photo} onOpen={() => setExpanded(true)}/>{navigation}{!photo.pending && <button className="gallery-expand" type="button" onClick={() => setExpanded(true)}><Maximize/>Ampliar</button>}</> : <ProductModel key={modelSource} source={modelSource} name={product.name} disableAutoRotate={product.disableAutoRotate} exploded={mode === 'exploded'}/>}
+      {mode === 'photo' ? <><ProductPhoto key={photo.id} photo={photo} onOpen={() => setExpanded(true)}/>{navigation}{!photo.pending && <button className="gallery-expand" type="button" onClick={() => setExpanded(true)}><Maximize/>Ampliar</button>}</> : <ProductModel key={modelSource} source={modelSource} name={product.name} disableAutoRotate={product.disableAutoRotate} exploded={mode === 'exploded'} animationTime={mode === '3d' ? product.modelAnimationTime : 0}/>}
     </div>
     <div className="gallery-filmstrip">
     <div ref={strip} className="gallery-thumbnails" role="group" aria-label="Escolher foto do produto">
