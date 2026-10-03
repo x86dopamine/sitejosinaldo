@@ -21,7 +21,7 @@ export default function Cover({ onExplore, onWhereToBuy }) {
     </figure>
     <div className="vitara-cover-scene">
       <div className="vitara-cover-copy">
-        <h1 id="vitara-cover-title"><span>Peças feitas pela 3D CAR</span><span>para o seu Grand Vitara.</span></h1>
+        <h1 id="vitara-cover-title"><span>Seu Grand Vitara</span><span>completo de novo.</span></h1>
         <p className="vitara-cover-description">Produção em impressão 3D para reposição e acabamento.</p>
         <div className="vitara-cover-actions">
           <a className="brand-button brand-button-primary" href="#produtos" onClick={onExplore}>Ver catálogo <ArrowRight aria-hidden="true"/></a>
