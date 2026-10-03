@@ -16,18 +16,19 @@ export function SiteHeader({ onHome, onWhereToBuy, whatsapp, detailOpen = false 
 
 export default function Cover({ onExplore, onWhereToBuy }) {
   return <section className="vitara-cover" id="inicio" aria-labelledby="vitara-cover-title">
+    <figure className="vitara-cover-image" aria-hidden="true">
+      <img className="vitara-cover-photo" src="/grand-vitara-workshop.png" alt="" width="1024" height="576" fetchPriority="high" decoding="async"/>
+    </figure>
     <div className="vitara-cover-scene">
       <div className="vitara-cover-copy">
-        <h1 id="vitara-cover-title"><span>Seu Vitara.</span><span>Completo</span><span>de novo.</span></h1>
-        <p className="vitara-cover-description">Peças de reposição feitas com impressão 3D para o seu Grand Vitara.</p>
+        <h1 id="vitara-cover-title"><span>Peças para o</span><span>Grand Vitara.</span></h1>
+        <p className="vitara-cover-description">Difusores, puxadores e acabamentos produzidos por impressão 3D.</p>
         <div className="vitara-cover-actions">
-          <a className="brand-button brand-button-primary" href="#produtos" onClick={onExplore}>Explorar catálogo <ArrowRight aria-hidden="true"/></a>
+          <a className="brand-button brand-button-primary" href="#produtos" onClick={onExplore}>Ver catálogo <ArrowRight aria-hidden="true"/></a>
           <button className="brand-button brand-button-secondary" type="button" onClick={onWhereToBuy}>Onde comprar</button>
         </div>
       </div>
-      <figure className="vitara-cover-image">
-        <img className="vitara-cover-photo" src="/grand-vitara-workshop.png" alt="Suzuki Grand Vitara branco em uma oficina de impressão 3D, com bancada em primeiro plano" width="1024" height="576" fetchPriority="high" decoding="async"/>
-      </figure>
     </div>
   </section>;
 }
+

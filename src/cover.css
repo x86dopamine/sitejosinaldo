@@ -7,7 +7,7 @@
 }
 .site-header.is-detail-open { position: fixed; inset: 0 0 auto; }
 .vitara-cover-logo { display: inline-flex; align-items: center; gap: 10px; flex: none; }
-.vitara-cover-logo img { display: block; width: 40px; height: 40px; object-fit: contain; }
+.vitara-cover-logo img { display: block; width: 40px; height: 40px; object-fit: contain; border-radius: 50%; }
 .vitara-cover-logo > span { color: var(--brand-ink); font: 800 30px/1 var(--brand-font); letter-spacing: -1.8px; }
 .vitara-cover-logo b { color: var(--brand-orange); }
 .site-header-actions { display: flex; align-items: center; gap: 10px; }
@@ -22,19 +22,41 @@
 .site-header .header-contact:hover { background: #bd4100; transform: none; }
 .site-header .header-contact svg { width: 19px; height: 19px; color: currentColor; }
 .site-header a:focus-visible, .site-header button:focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 3px; }
-.vitara-cover { background: #fff; color: var(--brand-ink); font-family: var(--brand-font); scroll-margin-top: var(--site-header-height); }
-.vitara-cover-scene {
-  display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.15fr); align-items: center;
-  width: min(calc(100% - 2 * var(--page-gutter)), 1380px); margin-inline: auto;
-  min-height: min(760px, calc(100svh - var(--site-header-height))); gap: clamp(32px, 4.5vw, 64px); padding-block: 64px;
+.vitara-cover {
+  position: relative; isolation: isolate; overflow: hidden;
+  background: #fff; color: var(--brand-ink); font-family: var(--brand-font);
+  scroll-margin-top: var(--site-header-height);
 }
-.vitara-cover-copy { min-width: 0; }
-.vitara-cover h1 { margin: 0; color: var(--brand-ink); font: 800 clamp(52px, 5.6vw, 86px)/1.01 var(--brand-font); letter-spacing: -.065em; }
+.vitara-cover::after {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(90deg, #fffffff5 0%, #ffffffed 23%, #ffffffb8 38%, #ffffff26 58%, #ffffff00 76%);
+}
+.vitara-cover-scene {
+  position: relative; display: flex; align-items: center;
+  width: min(calc(100% - 2 * var(--page-gutter)), 1380px); margin-inline: auto;
+  min-height: clamp(650px, calc(100svh - var(--site-header-height)), 920px);
+  padding-block: clamp(72px, 10vh, 124px);
+}
+.vitara-cover-copy { width: min(100%, 520px); min-width: 0; }
+.vitara-cover h1 { margin: 0; color: var(--brand-ink); font: 800 clamp(54px, 4.8vw, 76px)/1.07 var(--brand-font); letter-spacing: -.05em; }
 .vitara-cover h1 > span { display: block; margin: 0; color: inherit; font: inherit; }
-.vitara-cover-description { max-width: 34ch; margin: 26px 0 0; color: var(--brand-muted); font: 400 clamp(16px, 1.3vw, 18px)/1.65 var(--brand-font); }
+.vitara-cover-description { max-width: 34ch; margin: 24px 0 0; color: #4b5057; font: 400 clamp(16px, 1.3vw, 18px)/1.65 var(--brand-font); }
 .vitara-cover-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
-.vitara-cover-image { margin: 0; width: 100%; aspect-ratio: 1.45; overflow: hidden; border-radius: 18px; background: #e7e4e1; }
-.vitara-cover-photo { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 64% 50%; }
+.vitara-cover-image { position: absolute; inset: 0; z-index: -2; margin: 0; background: #e7e4e1; }
+.vitara-cover-photo { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 68% 50%; }
+@media (max-width: 1100px) {
+  .vitara-cover { --cover-photo-height: clamp(340px, 57vw, 560px); }
+  .vitara-cover-image { inset: 0 0 auto; height: var(--cover-photo-height); }
+  .vitara-cover-photo { object-position: 88% 50%; }
+  .vitara-cover::after {
+    background: linear-gradient(180deg, #ffffff00 0, #ffffff00 calc(var(--cover-photo-height) * .66), #ffffff80 calc(var(--cover-photo-height) * .86), #fff var(--cover-photo-height));
+  }
+  .vitara-cover-scene { min-height: 0; padding-block: calc(var(--cover-photo-height) - 28px) 64px; }
+  .vitara-cover-copy { width: 100%; max-width: 720px; }
+  .vitara-cover h1 { font-size: clamp(48px, 6.7vw, 68px); }
+  .vitara-cover-description { max-width: 46ch; margin-top: 22px; font-size: 17px; }
+  .vitara-cover-actions { margin-top: 28px; }
+}
 @media (max-width: 820px) {
   .site-header { gap: 12px; }
   .vitara-cover-logo { gap: 7px; }
@@ -43,20 +65,21 @@
   .site-header .sales-shortcut { padding-inline: 13px; font-size: 12px; }
   .site-header .header-contact { width: 44px; padding: 0; }
   .site-header .header-contact > span { display: none; }
-  .vitara-cover-scene { grid-template-columns: minmax(0, 1fr); min-height: 0; gap: 32px; padding-block: 42px 48px; }
-  .vitara-cover-copy { width: 100%; max-width: 580px; margin-inline: auto; }
-  .vitara-cover h1 { font-size: clamp(44px, 8.5vw, 70px); }
-  .vitara-cover-description { margin-top: 22px; font-size: 16px; }
+}
+@media (max-width: 600px) {
+  .vitara-cover { --cover-photo-height: clamp(240px, 75vw, 420px); }
+  .vitara-cover-scene { padding-block: calc(var(--cover-photo-height) - 8px) 48px; }
+  .vitara-cover h1 { font-size: clamp(36px, 9.7vw, 52px); }
+  .vitara-cover-description { max-width: 33ch; margin-top: 20px; font-size: 16px; }
   .vitara-cover-actions { margin-top: 26px; }
-  .vitara-cover-image { max-width: 680px; margin-inline: auto; aspect-ratio: 1.6; border-radius: 14px; }
 }
 @media (max-width: 480px) {
-  .site-header-actions { gap: 8px; }
+  .site-header-actions { gap: 6px; }
   .vitara-cover-logo img { width: 30px; height: 30px; }
   .vitara-cover-logo > span { font-size: 23px; }
-  .site-header .sales-shortcut { padding-inline: 10px; }
-  .vitara-cover-scene { padding-block: 32px 40px; gap: 28px; }
-  .vitara-cover h1 { font-size: clamp(43px, 11vw, 53px); }
-  .vitara-cover-actions { display: grid; grid-template-columns: 1fr; }
+  .site-header .sales-shortcut { padding-inline: 9px; font-size: 11px; }
+  .vitara-cover-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .vitara-cover-actions .brand-button { min-height: 52px; padding-inline: 10px; font-size: 13px; }
 }
 @media (prefers-reduced-motion: reduce) { .site-header .sales-shortcut, .site-header .header-contact { transition: none; } }
+
